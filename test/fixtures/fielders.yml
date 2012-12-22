@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  inning_id: 1
+  player_id: 1
+  involvement: 1
+  substitute: false
+  captain: false
+  keeper: false
+
+two:
+  inning_id: 1
+  player_id: 1
+  involvement: 1
+  substitute: false
+  captain: false
+  keeper: false

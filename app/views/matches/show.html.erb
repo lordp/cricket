@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Match #<%= @match.match_number %></h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Teams:</strong></td>
+      <td><%= render(:partial => 'matches/team_link', :object => @match.team1) %> vs <%= render(:partial => 'matches/team_link', :object => @match.team2) %></td>
+    </tr>
+    <tr>
+      <td><strong>Dates:</strong></td>
+      <td><%= @match.match_dates %></td>
+    </tr>
+    <tr>
+      <td><strong>Ground:</strong></td>
+      <td><%= link_to(@match.ground.name, ground_path(@match.ground)) %></td>
+    </tr>
+    <tr>
+      <td><strong>Series:</strong></td>
+      <td><%= @match.series %></td>
+    </tr>
+    <tr>
+      <td><strong>Season:</strong></td>
+      <td><%= @match.season %></td>
+    </tr>
+  </tbody>  
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Player</th>
+      <th></th>
+      <th>R</th>
+      <th>M</th>
+      <th>B</th>
+      <th>4s</th>
+      <th>6s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render(:partial => 'batting_inning', :collection => @match.innings.batting_innings.where(:inning_number => 1).order(:id)) %>
+  </tbody>
+</table>
+
+
+<%= link_to 'Back', matches_path %>

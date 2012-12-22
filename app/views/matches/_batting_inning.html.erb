@@ -1,0 +1,9 @@
+    <tr>
+      <td data-inning-id="<%= batting_inning.id %>"><%= link_to_if(batting_inning.player_id != 12, batting_inning.player.name, player_path(batting_inning.player)) %></td>
+      <td data-dismissal-text="<%= batting_inning.dismissal_text %>"><%= show_dismissal(batting_inning) %></td>
+      <td><%= batting_inning.runs %></td>
+      <td><%= batting_inning.minutes %></td>
+      <td><%= batting_inning.balls %></td>
+      <td><%= batting_inning.fours %></td>
+      <td><%= batting_inning.sixes %></td>
+    </tr>

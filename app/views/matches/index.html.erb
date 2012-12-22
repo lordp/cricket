@@ -1,0 +1,7 @@
+<h1>Listing matches<%= params[:team_id].nil? ? "" : " for #{@team.name}" %></h1>
+
+<%= paginate @matches %>
+
+<%= render :partial => 'match_list', :locals => { :matches => @matches } %>
+
+<%= paginate @matches %>

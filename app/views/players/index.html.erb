@@ -1,0 +1,10 @@
+<h1>Listing players<%= params[:team_id].nil? ? "" : " for #{@team.name}" %></h1>
+
+<%= form_tag(players_path(), :method => :get) do |f| %>
+<p>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag "Search", :name => nil %>
+</p>
+<% end %>
+
+<%= render :partial => 'player_list', :locals => { :players => @players } %>

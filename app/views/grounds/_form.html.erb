@@ -1,0 +1,26 @@
+<%= form_for(@ground) do |f| %>
+  <% if @ground.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ground.errors.count, "error") %> prohibited this ground from being saved:</h2>
+
+      <ul>
+      <% @ground.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p><%= f.label :name, 'Name' %>:
+  <%= f.text_field :name %></p>
+
+  <p><%= f.label :nickname, 'Nickname' %>:
+    <%= f.text_field :nickname %></p>
+
+  <p><%= f.label :team_id, 'Home Team' %>:
+    <%= f.select :team_id, Team.all.collect { |t| [t.name, t.id] }, { :include_blank => true } %></p>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

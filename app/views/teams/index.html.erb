@@ -1,0 +1,15 @@
+<h1>Listing teams</h1>
+
+<table>
+  <tr>
+    <th>Team</th>
+    <th>Player Count</th>
+  </tr>
+
+<% @teams.each do |team| %>
+  <tr>
+    <td><%= link_to team.name, team %></td>
+    <td><%= pluralize(team.players.size, 'player') %></td>
+  </tr>
+<% end %>
+</table>

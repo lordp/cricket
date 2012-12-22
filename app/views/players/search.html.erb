@@ -1,0 +1,17 @@
+<h1>Player search - <%= @term %></h1>
+
+<%#= paginate @players %>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% @players.each do |player| %>
+  <tr>
+    <td><%= link_to player.full_name, player %></td>
+  </tr>
+<% end %>
+</table>
+
+<%#= paginate @players %>

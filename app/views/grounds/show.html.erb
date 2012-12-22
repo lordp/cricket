@@ -1,0 +1,8 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @ground.name %></h1>
+<p>Nickname: <%= @ground.nickname %></p>
+<p>Home team: <%= @ground.team_name %></p>
+
+<%= link_to 'Edit', edit_ground_path(@ground) %> |
+<%= link_to 'Back', grounds_path %>
