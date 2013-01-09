@@ -41,29 +41,6 @@ class Inning < ActiveRecord::Base
   scope :batting_innings, where(:inning_type => Inning::INNING_TYPE_BAT)
   scope :bowling_innings, where(:inning_type => Inning::INNING_TYPE_BOWL)
 
-  def dismissal
-    case self.dismissal_type
-      when DISMISSAL_TYPE_CAUGHT then "c #{self.dismissal_fielder.name}"
-      when DISMISSAL_TYPE_BOWLED then "b #{self.dismissal_bowler.name}"
-      #when DISMISSAL_TYPE_STUMPED = 2
-      #when DISMISSAL_TYPE_LBW = 3
-      #when DISMISSAL_TYPE_RUN_OUT = 4
-      #when DISMISSAL_TYPE_HIT_WICKET = 5
-
-      #when DISMISSAL_TYPE_RETIRED_HURT = 6
-      #when DISMISSAL_TYPE_RETIRED_OUT = 7
-      #when DISMISSAL_TYPE_RETIRED_NOT_OUT = 8
-      #when DISMISSAL_TYPE_RETIRED_ILL = 9
-
-      #when DISMISSAL_TYPE_ABSENT = 10
-      #when DISMISSAL_TYPE_ABSENT_HURT = 11
-      #when DISMISSAL_TYPE_ABSENT_ILL = 12
-
-      #when DISMISSAL_TYPE_HANDLED_THE_BALL = 13
-      #when DISMISSAL_TYPE_OBSTRUCTING_THE_FIELD = 14
-    end
-  end
-
   def fix_dismissal
     dismissals = {
       :caught                => /^c (\u2020?.+?) b (.+)$/,
@@ -104,6 +81,10 @@ class Inning < ActiveRecord::Base
           :substitute  => true,
           :involvement => Fielder::FIELDER,
         }).save
+      end
+    elsif dismissal.captures.first == '&'
+      if fielder = self.find_player(dismissal.captures[1])
+        Fielder.populate(self.id, fielder, Fielder::FIELDER)
       end
     else
       if fielder = self.find_player(dismissal.captures.first)

@@ -27,39 +27,25 @@
   </tbody>  
 </table>
 
-<h2>Batting</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Player</th>
-      <th></th>
-      <th>R</th>
-      <th>M</th>
-      <th>B</th>
-      <th>4s</th>
-      <th>6s</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render(:partial => 'batting_inning', :collection => @match.innings.batting_innings.where(:inning_number => 1).order(:id)) %>
-  </tbody>
-</table>
-
-<h2>Bowling</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Player</th>
-    <th>O</th>
-    <th>M</th>
-    <th>R</th>
-    <th>W</th>
-  </tr>
-  </thead>
-  <tbody>
-    <%= render(:partial => 'bowling_inning', :collection => @match.innings.bowling_innings.where(:inning_number => 1).order(:id)) %>
-  </tbody>
-</table>
-
+<dl class="tabs">
+  <dd class="active"><a href="#innings1">Innings 1</a></dd>
+  <dd><a href="#innings2">Innings 2</a></dd>
+  <dd><a href="#innings3">Innings 3</a></dd>
+  <dd><a href="#innings4">Innings 4</a></dd>
+</dl>
+<ul class="tabs-content">
+  <li class="active" id="innings1Tab">
+    <%= render :partial => 'inning', :locals => { :inning_number => 1 } %>
+  </li>
+  <li id="innings2Tab">
+    <%= render :partial => 'inning', :locals => { :inning_number => 2 } %>
+  </li>
+  <li id="innings3Tab">
+    <%= render :partial => 'inning', :locals => { :inning_number => 3 } %>
+  </li>
+  <li id="innings4Tab">
+    <%= render :partial => 'inning', :locals => { :inning_number => 4 } %>
+  </li>
+</ul>
 
 <%= link_to 'Back', matches_path %>

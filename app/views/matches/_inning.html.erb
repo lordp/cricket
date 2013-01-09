@@ -1,0 +1,33 @@
+<h2>Batting</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Player</th>
+    <th></th>
+    <th>R</th>
+    <th>M</th>
+    <th>B</th>
+    <th>4s</th>
+    <th>6s</th>
+  </tr>
+  </thead>
+  <tbody>
+  <%= render(:partial => 'batting_inning', :collection => @match.innings.batting_innings.where(:inning_number => inning_number).order(:id)) %>
+  </tbody>
+</table>
+
+<h2>Bowling</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Player</th>
+    <th>O</th>
+    <th>M</th>
+    <th>R</th>
+    <th>W</th>
+  </tr>
+  </thead>
+  <tbody>
+  <%= render(:partial => 'bowling_inning', :collection => @match.innings.bowling_innings.where(:inning_number => inning_number).order(:id)) %>
+  </tbody>
+</table>

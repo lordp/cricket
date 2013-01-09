@@ -27,7 +27,6 @@ module InningsHelper
   end
 
   def player_link(fielder)
-    logger.info("#{fielder.player.name.upcase} => #{fielder.inspect}")
     link = ""
     link += "&dagger;" if fielder.keeper
     link += "sub (" if fielder.substitute
