@@ -1,7 +1,6 @@
 Cricinfo::Application.routes.draw do
   resources :grounds
 
-
   resources :matches, :grounds, :series, :seasons
 
   resources :players do
@@ -12,7 +11,7 @@ Cricinfo::Application.routes.draw do
   end
 
   resources :teams do
-    resources :players
+    resources :players, :matches
   end
 
   match 'players/search/:term' => 'players#search', :via => :get
