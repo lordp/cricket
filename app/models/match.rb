@@ -11,6 +11,8 @@ class Match < ActiveRecord::Base
 
   belongs_to :ground
 
+  delegate :name, :to => :ground, :prefix => true
+
   before_save :calculate_match_dates
 
   attr_accessible :start_date, :end_date
