@@ -117,4 +117,26 @@ module InningsHelper
     "obstructing the field"
   end
 
+  def identify_dismissal_type(type)
+    case type
+      when Inning::DISMISSAL_TYPE_CAUGHT     then 'Caught'
+      when Inning::DISMISSAL_TYPE_BOWLED     then 'Bowled'
+      when Inning::DISMISSAL_TYPE_STUMPED    then 'Stumped'
+      when Inning::DISMISSAL_TYPE_LBW        then 'LBW'
+      when Inning::DISMISSAL_TYPE_RUN_OUT    then 'Run Out'
+      when Inning::DISMISSAL_TYPE_HIT_WICKET then 'Hit Wicket'
+
+      when Inning::DISMISSAL_TYPE_RETIRED_HURT,
+        Inning::DISMISSAL_TYPE_RETIRED_OUT,
+        Inning::DISMISSAL_TYPE_RETIRED_NOT_OUT,
+        Inning::DISMISSAL_TYPE_RETIRED_ILL then 'Retired'
+
+      when Inning::DISMISSAL_TYPE_ABSENT_HURT,
+        Inning::DISMISSAL_TYPE_ABSENT_ILL then 'Absent'
+
+      when Inning::DISMISSAL_TYPE_HANDLED_THE_BALL then 'Handled The Ball'
+      when Inning::DISMISSAL_TYPE_HIT_WICKET       then 'Obstructing The Field'
+      else "not out"
+    end
+  end
 end
