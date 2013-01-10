@@ -3,5 +3,3 @@
 <h1><%= @team.name %></h1>
 <p><%= link_to(pluralize(@team.players.size, 'player'), team_players_path(@team)) %></p>
 <p><%= link_to(pluralize(@team.matches.size, 'match'), team_matches_path(@team)) %></p>
-
-<%= link_to 'Back', teams_path %>
