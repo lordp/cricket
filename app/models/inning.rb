@@ -249,6 +249,14 @@ class Inning < ActiveRecord::Base
     self.dismissal_text == 'not out'
   end
 
+  def opposition
+    if self.team == self.match.team1
+      self.match.team2
+    else
+      self.match.team1
+    end
+  end
+
   private
 
     def w=(w)
