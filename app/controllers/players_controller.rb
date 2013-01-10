@@ -58,7 +58,11 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @innings }
+      format.json do
+        innings = @innings.collect { |i| { :runs => i.runs, :not_out => i.not_out?, :date => i.match.start_date } }
+
+        render json: innings
+      end
     end
   end
 
@@ -68,7 +72,6 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @innings }
     end
   end
 
