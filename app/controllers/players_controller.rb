@@ -72,6 +72,7 @@ class PlayersController < ApplicationController
             :date           => i.match.start_date,
             :inning_number  => i.inning_number,
             :dismissal_text => i.dismissal_text,
+            :match_number   => i.match.match_number,
           }
         end
 
@@ -86,6 +87,25 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.json do
+        innings = @innings.collect do |i|
+          {
+            :overs         => i.overs,
+            :runs          => i.runs,
+            :maidens       => i.maidens,
+            :wickets       => i.wickets,
+            :wides         => i.wides,
+            :noballs       => i.noballs,
+            :captain       => i.captain.blank? ? false : true,
+            :keeper        => i.keeper.blank? ? false : true,
+            :date          => i.match.start_date,
+            :inning_number => i.inning_number,
+            :match_number  => i.match.match_number,
+          }
+        end
+
+        render json: innings
+      end
     end
   end
 
