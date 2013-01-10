@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  caches_page :show, :gzip => true
+  caches_page :bowling_innings, :batting_innings, :gzip => true
 
   # GET /players
   # GET /players.json
@@ -53,12 +53,23 @@ class PlayersController < ApplicationController
   end
 
   def batting_innings
-    innings = Player.find(params[:id]).innings.batting_innings.includes(:match).order('matches.match_number').collect do |inning|
-      { :runs => inning.runs, :not_out => inning.not_out?, :date => inning.match.start_date }
-    end
+    @player  = Player.find(params[:id])
+    @innings = @player.innings.batting_innings.includes(:match).order('matches.match_number')
 
     respond_to do |format|
-      format.json { render json: innings }
+      format.html
+      format.json { render json: @innings }
     end
   end
+
+  def bowling_innings
+    @player  = Player.find(params[:id])
+    @innings = @player.innings.bowling_innings.includes(:match).order('matches.match_number')
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @innings }
+    end
+  end
+
 end

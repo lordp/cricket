@@ -4,59 +4,9 @@
 <h2><%= cricinfo_link(@player) %></h2>
 
 <% if @player.innings.batting_innings.size > 0 %>
-<h2>Batting Innings (<%= @player.innings.batting_innings.size %>) - <%= link_to('chart', chart_player_path(@player)) %></h2>
-<table>
-  <tr>
-    <th>Team</th>
-    <th>Opposition</th>
-    <th>Match Dates</th>
-    <th>Dismissal</th>
-    <th>Runs</th>
-    <th>Minutes</th>
-    <th>Balls</th>
-    <th>Fours</th>
-    <th>Sixes</th>
-  </tr>
-  <% @player.innings.batting_innings.includes(:match).order('matches.start_date').each do |inning| %>
-  <tr class="<%= cycle("even", "odd") %>">
-    <td><%= inning.team.nil? ? "Unknown (#{inning.match.cricinfo_id})" : render(:partial => 'matches/team_link', :object => inning.team) %></td>
-    <td><%= render(:partial => 'matches/team_link', :object => inning.opposition) %></td>
-    <td><%= link_to(inning.match.match_dates, match_path(inning.match)) %></td>
-    <td><%= show_dismissal(inning) %></td>
-    <td><%= inning.runs %><%= inning.not_out? ? '*' : '' %></td>
-    <td><%= inning.minutes %></td>
-    <td><%= inning.balls %></td>
-    <td><%= inning.fours %></td>
-    <td><%= inning.sixes %></td>
-  </tr>
-  <% end %>
-</table>
+<h2><%= link_to(pluralize(@player.innings.batting_innings.size, 'Batting Inning'), batting_innings_player_path(@player)) %></h2>
 <% end %>
 
 <% if @player.innings.bowling_innings.size > 0 %>
-<h2>Bowling Innings (<%= @player.innings.bowling_innings.size %>)</h2>
-<table>
-  <tr>
-    <th>Team</th>
-    <th>Opposition</th>
-    <th>Match Dates</th>
-    <th>Overs</th>
-    <th>Runs</th>
-    <th>Wickets</th>
-    <th>Wides</th>
-    <th>No Balls</th>
-  </tr>
-  <% @player.innings.bowling_innings.includes(:match).order('matches.start_date').each do |inning| %>
-      <tr class="<%= cycle("even", "odd") %>">
-        <td><%= inning.team.nil? ? "Unknown (#{inning.match.cricinfo_id})" : render(:partial => 'matches/team_link', :object => inning.team) %></td>
-        <td><%= render(:partial => 'matches/team_link', :object => inning.opposition) %></td>
-        <td><%= link_to(inning.match.match_dates, match_path(inning.match)) %></td>
-        <td><%= inning.overs %></td>
-        <td><%= inning.runs %></td>
-        <td><%= inning.wickets %></td>
-        <td><%= inning.wides %></td>
-        <td><%= inning.noballs %></td>
-      </tr>
-  <% end %>
-</table>
+<h2><%= link_to(pluralize(@player.innings.bowling_innings.size, 'Bowling Inning'), bowling_innings_player_path(@player)) %></h2>
 <% end %>

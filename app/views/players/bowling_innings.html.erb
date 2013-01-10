@@ -1,0 +1,25 @@
+<h2><%= pluralize(@innings.size, 'Bowling Inning') %></h2>
+<table>
+  <tr>
+    <th>Team</th>
+    <th>Opposition</th>
+    <th>Match Dates</th>
+    <th>Overs</th>
+    <th>Runs</th>
+    <th>Wickets</th>
+    <th>Wides</th>
+    <th>No Balls</th>
+  </tr>
+  <% @innings.each do |inning| %>
+    <tr class="<%= cycle("even", "odd") %>">
+      <td><%= inning.team.nil? ? "Unknown (#{inning.match.cricinfo_id})" : render(:partial => 'matches/team_link', :object => inning.team) %></td>
+      <td><%= render(:partial => 'matches/team_link', :object => inning.opposition) %></td>
+      <td><%= link_to(inning.match.match_dates, match_path(inning.match)) %></td>
+      <td><%= inning.overs %></td>
+      <td><%= inning.runs %></td>
+      <td><%= inning.wickets %></td>
+      <td><%= inning.wides %></td>
+      <td><%= inning.noballs %></td>
+    </tr>
+  <% end %>
+</table>

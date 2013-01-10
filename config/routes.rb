@@ -7,6 +7,7 @@ Cricinfo::Application.routes.draw do
     member do
       get 'chart'
       get 'batting_innings'
+      get 'bowling_innings'
     end
   end
 
