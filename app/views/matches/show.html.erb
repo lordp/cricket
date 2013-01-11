@@ -24,7 +24,11 @@
       <td><strong>Season:</strong></td>
       <td><%= @match.season %></td>
     </tr>
-  </tbody>  
+    <tr>
+      <td><strong>CricInfo Link:</strong></td>
+      <td><%= cricinfo_link(@match) %></td>
+    </tr>
+  </tbody>
 </table>
 
 <dl class="tabs">
