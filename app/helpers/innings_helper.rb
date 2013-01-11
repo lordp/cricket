@@ -66,8 +66,6 @@ module InningsHelper
   def show_stumped(inning)
     fielder = inning.fielders.find_by_involvement(Fielder::FIELDER)
     bowler  = inning.fielders.find_by_involvement(Fielder::BOWLER)
-    logger.info("FIELDER = #{fielder.inspect}")
-    logger.info("BOWLER = #{bowler.inspect}")
     if !fielder.nil? && !bowler.nil?
       "st #{player_link(fielder)} b #{player_link(bowler)}".html_safe
     end

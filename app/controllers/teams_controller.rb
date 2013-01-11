@@ -16,7 +16,6 @@ class TeamsController < ApplicationController
   # GET /teams/1.json
   def show
     @team = Team.find(params[:id])
-    logger.info("HELLO - #{@team.matches.class}")
     @matches = @team.matches.page(params[:page]).per(25)
 
     respond_to do |format|

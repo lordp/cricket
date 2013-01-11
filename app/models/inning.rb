@@ -133,7 +133,6 @@ class Inning < ActiveRecord::Base
   def runout(dismissal)
     self.dismissal_type = DISMISSAL_TYPE_RUN_OUT
     players = dismissal.captures.first.gsub(/[()]/, '').split(/\//)
-    puts players.inspect
 
     if players.first.match(/^sub \[([^\]]+)\]/)
       if fielder = self.find_player($~[1])
@@ -146,7 +145,6 @@ class Inning < ActiveRecord::Base
       end
     else
       if fielder = self.find_player(players.first)
-        puts fielder.inspect
         Fielder.find_or_create_by_player_id_and_inning_id(fielder[:id], self.id, {
           :captain     => fielder[:captain],
           :keeper      => fielder[:keeper],
@@ -156,7 +154,6 @@ class Inning < ActiveRecord::Base
     end
 
     if players.count > 1 && fielder = self.find_player(players.last)
-      puts fielder.inspect
       Fielder.find_or_create_by_player_id_and_inning_id(fielder[:id], self.id, {
         :captain     => fielder[:captain],
         :keeper      => fielder[:keeper],
@@ -169,7 +166,6 @@ class Inning < ActiveRecord::Base
   def stumped(dismissal)
     self.dismissal_type = DISMISSAL_TYPE_STUMPED
     if bowler = self.find_player(dismissal.captures.last)
-      puts bowler.inspect
       Fielder.find_or_create_by_player_id_and_inning_id(bowler[:id], self.id, {
         :captain     => bowler[:captain],
         :involvement => Fielder::BOWLER,
@@ -177,7 +173,6 @@ class Inning < ActiveRecord::Base
     end
 
     if fielder = self.find_player(dismissal.captures.first)
-      puts fielder.inspect
       Fielder.find_or_create_by_player_id_and_inning_id(fielder[:id], self.id, {
         :captain     => fielder[:captain],
         :keeper      => fielder[:keeper],
