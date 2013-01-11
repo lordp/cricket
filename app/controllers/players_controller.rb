@@ -53,8 +53,9 @@ class PlayersController < ApplicationController
   end
 
   def batting_innings
-    @player  = Player.find(params[:id])
-    @innings = @player.innings.batting_innings.includes(:match).order('matches.match_number')
+    @player          = Player.find(params[:id])
+    @innings         = @player.innings.batting_innings.includes(:match).order('matches.match_number')
+    @dismissal_types = @player.innings.batting_innings.select(:dismissal_type).group(:dismissal_type).count.reject { |k,v| k.nil? }
 
     respond_to do |format|
       format.html
