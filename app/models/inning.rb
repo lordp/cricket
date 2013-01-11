@@ -216,7 +216,7 @@ class Inning < ActiveRecord::Base
   def find_player(name)
     # look for players in the same match
     name.gsub!(/[\u2020\*]/, '')
-    players = self.match.innings.joins(:player).where('players.name like ?', "%#{name}%")
+    players = self.match.innings.joins(:player).where('players.name like ?', "%#{name}%").where('team_id != ?', self.team_id)
     if players.empty?
       # try looking across the entire player catalogue
       player = Player.where('name like ?', "%#{name}%").first
