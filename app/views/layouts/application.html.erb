@@ -10,7 +10,7 @@
 
 <!-- Entire Navbar Code -->
 <ul class="nav-bar">
-  <li class="active"><%= link_to('Home', root_path) %></li>
+  <li class="<%= active_page?('news') %>"><%= link_to('Home', root_path) %></li>
   <li class="has-flyout <%= active_page?('teams') %>"><a href="#">Teams</a>
     <ul class="flyout">
       <% Team.all.each do |team| %>
