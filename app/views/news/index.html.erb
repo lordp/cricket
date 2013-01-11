@@ -1,0 +1,8 @@
+<h1>News</h1>
+
+<% @news.each do |news| %>
+<div class="news_item">
+  <div><%= news.content.html_safe %></div>
+  <div class="news_date"><strong>Posted:</strong> <%= news.created_at.strftime('%d %B %Y at %l:%M%p') %></div>
+</div>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121220015437) do
+ActiveRecord::Schema.define(:version => 20130111025809) do
 
   create_table "fielders", :force => true do |t|
     t.integer  "inning_id"
@@ -56,9 +56,9 @@ ActiveRecord::Schema.define(:version => 20121220015437) do
     t.integer  "dismissal_bowler_id"
     t.integer  "dismissal_fielder_id"
     t.integer  "dismissal_other_fielder_id"
-    t.integer  "dismissal_type"
     t.text     "extras"
     t.integer  "team_id"
+    t.integer  "dismissal_type"
     t.boolean  "captain"
     t.boolean  "keeper"
     t.boolean  "fielder_is_captain"
@@ -92,6 +92,12 @@ ActiveRecord::Schema.define(:version => 20121220015437) do
     t.integer  "team1_id"
     t.integer  "team2_id"
     t.integer  "ground_id"
+  end
+
+  create_table "news", :force => true do |t|
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "players", :force => true do |t|

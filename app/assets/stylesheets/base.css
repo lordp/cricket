@@ -1,3 +1,12 @@
 tr.odd {
-    background: #DEDEDE;
+  background: #DEDEDE;
+}
+
+.news_item {
+  margin-bottom: 2em;
+}
+
+.news_date {
+  font-size: .8em;
+  color: #CCC;
 }

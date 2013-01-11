@@ -10,6 +10,7 @@
 
 <!-- Entire Navbar Code -->
 <ul class="nav-bar">
+  <li class="active"><%= link_to('Home', root_path) %></li>
   <li class="has-flyout <%= active_page?('teams') %>"><a href="#">Teams</a>
     <ul class="flyout">
       <% Team.all.each do |team| %>
@@ -24,7 +25,7 @@
 
 <%= yield %>
 
-<p>All content copyrighted by <%= link_to 'ESPN Cricinfo', 'http://www.espncricinfo.com' %>, all trademarks owned by their respective owners.</p>
+<footer>All content copyrighted by <%= link_to 'ESPN Cricinfo', 'http://www.espncricinfo.com' %>, all trademarks owned by their respective owners.</footer>
 
 </body>
 </html>
