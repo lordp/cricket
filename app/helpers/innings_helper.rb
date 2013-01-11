@@ -136,7 +136,7 @@ module InningsHelper
 
       when Inning::DISMISSAL_TYPE_HANDLED_THE_BALL then 'Handled The Ball'
       when Inning::DISMISSAL_TYPE_HIT_WICKET       then 'Obstructing The Field'
-      else "not out"
+      else nil
     end
   end
 end
