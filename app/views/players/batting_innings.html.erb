@@ -1,27 +1,80 @@
-<h2><%= pluralize(@innings.size, 'Batting Inning') %> - <%= link_to('chart', chart_player_path(@player)) %></h2>
-<table>
-  <tr>
-    <th>Team</th>
-    <th>Opposition</th>
-    <th>Match Dates</th>
-    <th>Dismissal</th>
-    <th>Runs</th>
-    <th>Minutes</th>
-    <th>Balls</th>
-    <th>Fours</th>
-    <th>Sixes</th>
-  </tr>
-  <% @innings.each do |inning| %>
-    <tr class="<%= cycle("even", "odd") %>">
-      <td><%= inning.team.nil? ? "Unknown (#{inning.match.cricinfo_id})" : render(:partial => 'matches/team_link', :object => inning.team) %></td>
-      <td><%= render(:partial => 'matches/team_link', :object => inning.opposition) %></td>
-      <td><%= link_to(inning.match.match_dates, match_path(inning.match)) %></td>
-      <td><%= show_dismissal(inning) %></td>
-      <td><%= inning.runs %><%= inning.not_out? ? '*' : '' %></td>
-      <td><%= inning.minutes %></td>
-      <td><%= inning.balls %></td>
-      <td><%= inning.fours %></td>
-      <td><%= inning.sixes %></td>
-    </tr>
-  <% end %>
-</table>
+<h2><%= pluralize(@innings.size, 'Batting Inning') %> for <%= link_to(@player.full_name, @player) %> - <%= link_to('chart', chart_player_path(@player)) %></h2>
+<dl class="tabs">
+  <dd class="active"><a href="#innings">Innings</a></dd>
+  <dd><a href="#basicStats">Basic Stats</a></dd>
+  <dd><a href="#dismissals">Dismissals</a></dd>
+</dl>
+<ul class="tabs-content">
+  <li class="active" id="inningsTab">
+    <table>
+      <tr>
+        <th>Team</th>
+        <th>Opposition</th>
+        <th>Match Dates</th>
+        <th>Dismissal</th>
+        <th>Runs</th>
+        <th>Minutes</th>
+        <th>Balls</th>
+        <th>Fours</th>
+        <th>Sixes</th>
+      </tr>
+      <% @innings.each do |inning| %>
+        <tr class="<%= cycle("even", "odd") %>">
+          <td><%= inning.team.nil? ? "Unknown (#{inning.match.cricinfo_id})" : render(:partial => 'matches/team_link', :object => inning.team) %></td>
+          <td><%= render(:partial => 'matches/team_link', :object => inning.opposition) %></td>
+          <td><%= link_to(inning.match.match_dates, match_path(inning.match)) %></td>
+          <td><%= show_dismissal(inning) %></td>
+          <td><%= inning.runs %><%= inning.not_out? ? '*' : '' %></td>
+          <td><%= inning.minutes %></td>
+          <td><%= inning.balls %></td>
+          <td><%= inning.fours %></td>
+          <td><%= inning.sixes %></td>
+        </tr>
+      <% end %>
+    </table>
+  </li>
+  <li id="basicStatsTab">
+    <table>
+      <tr>
+        <td><strong>Runs:</strong></td>
+        <td><%= @innings.sum(:runs) %></td>
+      </tr>
+      <tr>
+        <td><strong>Minutes:</strong></td>
+        <td><%= @innings.sum(:minutes) %></td>
+      </tr>
+      <tr>
+        <td><strong>Balls:</strong></td>
+        <td><%= @innings.sum(:balls) %></td>
+      </tr>
+      <tr>
+        <td><strong>Fours:</strong></td>
+        <td><%= @innings.sum(:fours) %></td>
+      </tr>
+      <tr>
+        <td><strong>Sixes:</strong></td>
+        <td><%= @innings.sum(:sixes) %></td>
+      </tr>
+    </table>
+  </li>
+  <li id="dismissalsTab">
+    <table>
+      <% @dismissal_types.each do |k,v| %>
+        <tr>
+          <td><strong><%= identify_dismissal_type(k) %>:</strong></td>
+          <td><%= v %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td><strong>Most often a victim to bowler:</strong></td>
+        <td><%= antagonist_count(@player.victim_count_as_batter(Fielder::BOWLER)) %></td>
+      </tr>
+      <tr>
+        <td><strong>Most often a victim to fielder:</strong></td>
+        <td><%= antagonist_count(@player.victim_count_as_batter(Fielder::FIELDER)) %></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+
+
