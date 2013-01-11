@@ -3,7 +3,7 @@ class Match < ActiveRecord::Base
   MATCH_TYPE_TEST = 0
   MATCH_TYPE_ODI  = 1
 
-	has_many :innings
+  has_many :innings, :dependent => :destroy
   has_many :players, :through => :innings
 
   belongs_to :team1, :class_name => 'Team'
