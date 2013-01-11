@@ -1,4 +1,4 @@
-<h2><%= pluralize(@innings.size, 'Bowling Inning') %></h2>
+<h2><%= pluralize(@innings.size, 'Bowling Inning') %> for <%= link_to(@player.full_name, @player) %></h2>
 <table>
   <tr>
     <th>Team</th>
