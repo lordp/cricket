@@ -22,10 +22,10 @@ class Inning < ActiveRecord::Base
   DISMISSAL_TYPE_HANDLED_THE_BALL = 13
   DISMISSAL_TYPE_OBSTRUCTING_THE_FIELD = 14
 
-	attr_accessible :inning_number, :match_id, :player_id
+  attr_accessible :inning_number, :match_id, :player_id
 
   belongs_to :match
-	belongs_to :player
+  belongs_to :player
   belongs_to :team
 
   delegate :name, :to => :team, :prefix => true, :allow_nil => true

@@ -1,7 +1,7 @@
 namespace :update do
 
-	desc "Update players"
-	task :players => :environment do
+  desc "Update players"
+  task :players => :environment do
 
     player_list = open("#{Rails.root}/players.txt").read
 
@@ -18,8 +18,8 @@ namespace :update do
     end
   end
 
-	desc "Update matches"
-	task :matches => :environment do
+  desc "Update matches"
+  task :matches => :environment do
 
     match_list = open("#{Rails.root}/odi.txt").read
 
