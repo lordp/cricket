@@ -3,11 +3,13 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Team(s)</th>
   </tr>
 
   <% players.each do |player| %>
       <tr>
         <td><%= link_to player.full_name, player %></td>
+        <td><%= player.teams.collect(&:name).to_sentence %></td>
       </tr>
   <% end %>
 </table>
