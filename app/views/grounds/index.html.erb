@@ -3,14 +3,13 @@
 <table>
   <tr>
     <th>Name</th>
-    <th></th>
+    <th>Home Team</th>
   </tr>
 
 <% @grounds.each do |ground| %>
   <tr>
     <td><%= link_to ground.name, ground %></td>
     <td><%= link_to_if !ground.team_name.blank?, ground.team_name, ground.team %></td>
-    <td><%= link_to 'Edit', edit_ground_path(ground) %></td>
   </tr>
 <% end %>
 </table>
