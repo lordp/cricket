@@ -30,11 +30,14 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
   end
+
+  task :symlink_shared do
+    run "ln -sfn #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  end
+
+  task :bundle_install, :roles => :app do
+    run "cd #{release_path} && bundle install"
+  end
 end
 
-desc "run bundle install"
-task :bundle_install, :roles => :app do
-  run "cd #{release_path} && bundle install"
-end
-
-after "deploy:update_code", :bundle_install
+after "deploy:update_code", 'deploy:bundle_install', 'deploy:symlink_shared'
