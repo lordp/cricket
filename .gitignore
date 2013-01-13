@@ -16,3 +16,5 @@
 
 # Ignore the rubymine .idea directory
 /.idea
+
+/config/database.yml
