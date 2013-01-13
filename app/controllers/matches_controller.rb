@@ -2,13 +2,15 @@ class MatchesController < ApplicationController
   def index
     if params[:team_id]
       @team = Team.find(params[:team_id])
-      @matches = @team.matches.order(:start_date).page(params[:page]).per(25)
+      @matches = @team.matches.order(:start_date)
     else
-      @matches = Match.order(:start_date).page(params[:page]).per(25)
+      @matches = Match.order(:start_date)
     end
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html do
+        @matches = @matches.page(params[:page]).per(25)
+      end
       format.json { render json: @matches }
     end
   end

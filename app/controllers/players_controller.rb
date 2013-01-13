@@ -4,21 +4,23 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    if params[:search].blank?
-      if params[:team_id].nil?
-        @players = Player.order(:full_name).page(params[:page]).per(25)
-      else
-        @team = Team.find(params[:team_id])
-        @players = @team.players.order(:full_name).page(params[:page]).per(25)
-      end
+    if params[:team_id].nil?
+      @players = Player.order(:full_name)
     else
-      @players = Player.where('full_name ilike ?', "%#{params[:search]}%").order(:full_name).page(params[:page]).per(25)
+      @team = Team.find(params[:team_id])
+      @players = @team.players.order(:full_name)
+    end
+
+    unless params[:search].blank?
+      @players = @players.where('full_name ilike ?', "%#{params[:search]}%")
     end
 
     @players.reject! { |p| p.id == 12 }
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html do
+        @players = @players.page(params[:page]).per(25)
+      end
       format.json { render json: @players }
     end
   end
