@@ -40,6 +40,7 @@ $(function() {
 
             return '<strong>Runs:</strong> ' + this.y +
               '<br/><strong>Average:</strong> ' + this.points[1].y +
+              '<br/><strong>Moving Average:</strong> ' + this.points[2].y +
               '<br/><strong>Not Out:</strong> ' + not_out +
               '<br/><strong>Match date:</strong> ' + this.points[0].point.options.date;
           }
@@ -51,6 +52,9 @@ $(function() {
         }, {
           name: 'Average',
           data: []
+        }, {
+          name: 'Moving Average (10 innings)',
+          data: []
         }]
       };
 
@@ -58,6 +62,7 @@ $(function() {
       jQuery.get(url + 'batting_innings.json', null, function(innings, state, xhr) {
         var runs = [];
         var average = [];
+        var moving_average = [];
         var total = 0, outs = 0;
 
         jQuery.each(innings, function(i, inning) {
@@ -73,10 +78,18 @@ $(function() {
           else {
             average.push(null);
           }
+
+          if (inning.moving_average == null) {
+            moving_average.push(inning.moving_average);
+          }
+          else {
+            moving_average.push(Number(inning.moving_average));
+          }
         });
 
         options.series[0].data = runs;
         options.series[1].data = average;
+        options.series[2].data = moving_average;
         chart = new Highcharts.Chart(options);
       });
     }

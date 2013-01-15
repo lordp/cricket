@@ -79,6 +79,13 @@ class PlayersController < ApplicationController
           }
         end
 
+        require 'moving_averager'
+        ma = MovingAverager.new(10)
+        innings.each do |i|
+          ma << i[:runs]
+          i[:moving_average] = ma.to_s
+        end
+
         render json: innings
       end
     end
