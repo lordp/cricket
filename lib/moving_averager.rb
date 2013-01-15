@@ -15,6 +15,6 @@ class MovingAverager
   end
   alias to_f average
   def to_s
-    average.to_s
+    average.to_s if @nums.length == @size
   end
 end
