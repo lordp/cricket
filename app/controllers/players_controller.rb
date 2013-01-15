@@ -41,16 +41,24 @@ class PlayersController < ApplicationController
     @players = Player.where('name ilike ?', "%#{params[:term]}%")
 
     respond_to do |format|
-      format.html # search.html.erb
+      format.html
       format.json { render json: @players }
     end
   end
 
-  def chart
+  def batting_chart
     @player = Player.find(params[:id])
 
     respond_to do |format|
-      format.html # search.html.erb
+      format.html
+    end
+  end
+
+  def bowling_chart
+    @player = Player.find(params[:id])
+
+    respond_to do |format|
+      format.html
     end
   end
 

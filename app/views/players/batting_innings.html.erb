@@ -1,4 +1,4 @@
-<h2><%= pluralize(@innings.size, 'Batting Inning') %> for <%= link_to(@player.full_name, @player) %> - <%= link_to('chart', chart_player_path(@player)) %></h2>
+<h2><%= pluralize(@innings.size, 'Batting Inning') %> for <%= link_to(@player.full_name, @player) %> - <%= link_to('chart', batting_chart_player_path(@player)) %></h2>
 <dl class="tabs">
   <dd class="active"><a href="#innings">Innings</a></dd>
   <dd><a href="#basicStats">Basic Stats</a></dd>
@@ -6,18 +6,21 @@
 </dl>
 <ul class="tabs-content">
   <li class="active" id="inningsTab">
-    <table>
-      <tr>
-        <th>Team</th>
-        <th>Opposition</th>
-        <th>Match Dates</th>
-        <th>Dismissal</th>
-        <th>Runs</th>
-        <th>Minutes</th>
-        <th>Balls</th>
-        <th>Fours</th>
-        <th>Sixes</th>
-      </tr>
+    <table id="batting_innings">
+      <thead>
+        <tr>
+          <th>Team</th>
+          <th>Opposition</th>
+          <th>Match Dates</th>
+          <th>Dismissal</th>
+          <th>Runs</th>
+          <th>Minutes</th>
+          <th>Balls</th>
+          <th>Fours</th>
+          <th>Sixes</th>
+        </tr>
+      </thead>
+      <tbody>
       <% @innings.each do |inning| %>
         <tr class="<%= cycle("even", "odd") %>">
           <td><%= inning.team.nil? ? "Unknown (#{inning.match.cricinfo_id})" : render(:partial => 'matches/team_link', :object => inning.team) %></td>
@@ -31,6 +34,7 @@
           <td><%= inning.sixes %></td>
         </tr>
       <% end %>
+      </tbody>
     </table>
   </li>
   <li id="basicStatsTab">

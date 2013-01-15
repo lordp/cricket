@@ -3,8 +3,9 @@ Cricinfo::Application.routes.draw do
 
   resources :players do
     member do
-      get 'chart'
+      get 'batting_chart'
       get 'batting_innings'
+      get 'bowling_chart'
       get 'bowling_innings'
     end
   end

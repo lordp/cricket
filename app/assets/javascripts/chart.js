@@ -1,13 +1,14 @@
 $(function() {
   try {
-    // check for the existence of the chart div
-    if ($('#chart').length) {
-      var chart;
+    var chart;
+    var options;
 
+    // check for the existence of the chart div
+    if ($('#batting_chart').length) {
       // define the options
-      var options = {
+      options = {
         chart: {
-          renderTo: 'chart',
+          renderTo: 'batting_chart',
           type: 'spline'
         },
 
@@ -42,7 +43,7 @@ $(function() {
               '<br/><strong>Average:</strong> ' + this.points[1].y +
               '<br/><strong>Moving Average:</strong> ' + this.points[2].y +
               '<br/><strong>Not Out:</strong> ' + not_out +
-              '<br/><strong>Match date:</strong> ' + this.points[0].point.options.date;
+              '<br/><strong>Match date:</strong> ' + this.points[0].point.date;
           }
         },
 
@@ -58,7 +59,7 @@ $(function() {
         }]
       };
 
-      var url = '/players/' + $('#chart').data('player-id') + '/';
+      var url = '/players/' + $('#batting_chart').data('player-id') + '/';
       jQuery.get(url + 'batting_innings.json', null, function(innings, state, xhr) {
         var runs = [];
         var average = [];
@@ -90,6 +91,85 @@ $(function() {
         options.series[0].data = runs;
         options.series[1].data = average;
         options.series[2].data = moving_average;
+        chart = new Highcharts.Chart(options);
+      });
+    }
+
+    if ($('#bowling_chart').length) {
+      // define the options
+      options = {
+        chart: {
+          renderTo: 'bowling_chart',
+          type: 'spline'
+        },
+
+        title: {
+          text: 'Innings'
+        },
+
+        xAxis: {
+          type: 'linear',
+          title: {
+            text: 'Inning number'
+          }
+        },
+
+        yAxis: {
+          title: {
+            text: 'Runs'
+          },
+          min: 0,
+          startOnTick: false
+        },
+
+        tooltip: {
+          shared: true,
+          formatter: function() {
+            return '<strong>Wickets:</strong> ' + this.y +
+              '<br/><strong>Runs:</strong> ' + this.points[1].y +
+              '<br/><strong>Average:</strong> ' + this.points[2].y +
+              '<br/><strong>Match date:</strong> ' + this.points[0].point.date;
+          }
+        },
+
+        series: [{
+          name: 'Wickets Taken',
+          data: []
+        }, {
+          name: 'Runs Conceded',
+          data: []
+        }, {
+          name: 'Average',
+          data: []
+        }]
+      };
+
+      var url = '/players/' + $('#bowling_chart').data('player-id') + '/';
+      jQuery.get(url + 'bowling_innings.json', null, function(innings, state, xhr) {
+        var wickets = [];
+        var runs = [];
+        var average = [];
+        var total = 0, total_wickets = 0;
+
+        jQuery.each(innings, function(i, inning) {
+          inning.y = inning.wickets;
+          wickets.push(inning);
+          runs.push(inning.runs);
+          total += inning.runs;
+          total_wickets += inning.wickets;
+
+          if (total_wickets > 0) {
+            average.push(Number((total / total_wickets).toFixed(2)));
+          }
+          else {
+            average.push(null);
+          }
+
+        });
+
+        options.series[0].data = wickets;
+        options.series[1].data = runs;
+        options.series[2].data = average;
         chart = new Highcharts.Chart(options);
       });
     }
