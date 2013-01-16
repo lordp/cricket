@@ -39,9 +39,25 @@ $(function() {
               not_out = 'Yes';
             }
 
+            var average;
+            if (typeof this.points[1] == 'undefined') {
+              average = 0;
+            }
+            else {
+              average = this.points[1].y;
+            }
+
+            var average;
+            if (typeof this.points[2] == 'undefined') {
+              moving_average = 0;
+            }
+            else {
+              moving_average = this.points[2].y;
+            }
+
             return '<strong>Runs:</strong> ' + this.y +
-              '<br/><strong>Average:</strong> ' + this.points[1].y +
-              '<br/><strong>Moving Average:</strong> ' + this.points[2].y +
+              '<br/><strong>Average:</strong> ' + average +
+              '<br/><strong>Moving Average:</strong> ' + moving_average +
               '<br/><strong>Not Out:</strong> ' + not_out +
               '<br/><strong>Match date:</strong> ' + this.points[0].point.date;
           }
@@ -125,9 +141,16 @@ $(function() {
         tooltip: {
           shared: true,
           formatter: function() {
+            var average;
+            if (typeof this.points[2] == 'undefined') {
+              average = 0;
+            }
+            else {
+              average = this.points[2].y;
+            }
             return '<strong>Wickets:</strong> ' + this.y +
               '<br/><strong>Runs:</strong> ' + this.points[1].y +
-              '<br/><strong>Average:</strong> ' + this.points[2].y +
+              '<br/><strong>Average:</strong> ' + average +
               '<br/><strong>Match date:</strong> ' + this.points[0].point.date;
           }
         },
