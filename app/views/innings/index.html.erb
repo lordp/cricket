@@ -1,0 +1,37 @@
+<h1>Search for innings</h1>
+
+<%= form_tag(innings_path(), :method => :get) do |f| %>
+<p>
+  <%= label_tag :runs %><%= text_field_tag :runs, params[:runs] %>
+  <%= radio_button_tag :dismissed, 'both', params[:dismissed] == 'both' || params[:dismissed].blank? %> All
+  <%= radio_button_tag :dismissed, 'outs', params[:dismissed] == 'outs' %> Only outs
+  <%= radio_button_tag :dismissed, 'nots', params[:dismissed] == 'nots' %> Only not outs
+  <br/>
+  <%= field_set_tag 'Dismissal type' do %>
+    <% Inning::dismissal_types.each do |index, type| %>
+      <%= check_box_tag 'dismissal_type[]', index, params[:dismissal_type] && !params[:dismissal_type].empty? && params[:dismissal_type].include?(index.to_s) %> <%= type %><br/>
+    <% end %>
+  <% end %>
+  <br/><%= submit_tag "Search", :name => nil %>
+</p>
+<% end %>
+
+<% if defined?(@innings) %>
+<table>
+  <tr>
+    <th>Player</th>
+    <th>Dismissal</th>
+    <th>Match Teams</th>
+    <th>Match Dates</th>
+  </tr>
+
+  <% @innings.each do |inning| %>
+  <tr>
+    <td><%= link_to_if(inning.player_id != 12, inning.player.name, player_path(inning.player)) %></td>
+    <td><%= show_dismissal(inning) %></td>
+    <td><%= render(:partial => 'matches/team_link', :object => inning.match.team1) %> vs <%= render(:partial => 'matches/team_link', :object => inning.match.team2) %></td>
+    <td><%= link_to(inning.match.match_dates, inning.match) %></td>
+  </tr>
+  <% end %>
+</table>
+<% end %>

@@ -1,5 +1,5 @@
 Cricinfo::Application.routes.draw do
-  resources :matches, :grounds, :series, :seasons
+  resources :matches, :grounds, :series, :seasons, :innings
 
   resources :players do
     member do

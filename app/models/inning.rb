@@ -252,6 +252,10 @@ class Inning < ActiveRecord::Base
     end
   end
 
+  def self.dismissal_types
+    Inning.constants.grep(/DISMISSAL_TYPE/).map { |dt| [ Inning.const_get(dt), dt.to_s.sub(/DISMISSAL_TYPE_/, '').humanize ] }
+  end
+
   private
 
     def w=(w)
